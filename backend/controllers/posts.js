@@ -1,3 +1,7 @@
-const postsModel = require("../models/users");
+const postsModel = require("../models/posts");
 
-module.exports = {};
+const createNewPost = (req, res) => {
+  const { post } = req.body;
+
+};
+module.exports = { createNewPost };

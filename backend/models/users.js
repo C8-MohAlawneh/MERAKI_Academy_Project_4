@@ -9,12 +9,12 @@ const usersSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: checkValid,
+      validator: checkEmailValid,
       message: (str) => `${str.value} is not a valid email!`,
     },
   },
   age: { type: Number, required: true },
-  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   password: { type: String, required: true },
@@ -24,8 +24,14 @@ usersSchema.pre("save", async function () {
   this.email = this.email.toLowerCase();
   this.password = await bcrypt.hash(this.password, 10);
 });
-function checkValid() {
-  if (/\S+@\S+\.\S+/.test(this.email)) {
+
+// check the email Email format
+function checkEmailValid() {
+  if (
+    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+      this.email
+    )
+  ) {
     return true;
   }
   return false;
