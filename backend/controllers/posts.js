@@ -59,6 +59,7 @@ const getAllPosts = (req, res) => {
     });
 };
 
+// update post
 const updatePostById = (req, res) => {
   const { id } = req.params;
   const { post } = req.body;
@@ -86,5 +87,31 @@ const updatePostById = (req, res) => {
     });
 };
 
+// Delete post by id
+const deletePostById = (req, res) => {
+  const { id } = req.params;
+  postsModel
+    .findOneAndDelete({ _id: id })
+    .then((post) => {
+      if (!post) {
+        return res.status(404).json({
+          success: false,
+          message: `The post with id => ${id} not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `Post deleted`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
 
-module.exports = { createNewPost, getAllPosts, updatePostById };
+
+module.exports = { createNewPost, getAllPosts, updatePostById, deletePostById };
