@@ -18,6 +18,7 @@ const usersSchema = new mongoose.Schema({
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   password: { type: String, required: true },
+  userPhoto: { type: String },
 });
 
 usersSchema.pre("save", async function () {

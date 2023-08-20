@@ -10,7 +10,7 @@ const register = (req, res) => {
     email,
     age,
     password,
-    role: "64e0e809a348867637164d50",
+    role: "64e25a223ba168eed7960f8b",
   });
   if (password.length < 8) {
     res.status(422).json({
