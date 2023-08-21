@@ -8,6 +8,7 @@ const {
   sendFriendReq,
   acceptFriendReq,
   deleteFriendReq,
+  getAllProfiles,
 } = require("../controllers/users");
 const authentication = require("../middleware/Authentication");
 const authorization = require("../middleware/authorization");
@@ -18,6 +19,9 @@ usersRouter.post("/login", login);
 
 // get profile
 usersRouter.get("/profile", authentication, getProfile);
+
+// get all profiles
+usersRouter.get("/allProfile", authentication, getAllProfiles);
 
 // add profile photo
 usersRouter.put("/profile/userPhoto", authentication, addUserPhoto);

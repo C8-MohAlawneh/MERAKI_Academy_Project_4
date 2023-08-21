@@ -92,17 +92,43 @@ const login = (req, res) => {
 };
 
 // get profile
-
 const getProfile = (req, res) => {
   const userId = req.token.userId;
   usersModel
     .findOne({ _id: userId })
-    .populate("posts friends role")
+    .populate("posts friends role friendsReq")
     .then((profile) => {
       res.status(200).json({
         success: true,
         message: "logged in profile",
         profile: profile,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+// get All profiles
+const getAllProfiles = (req, res) => {
+  const userId = req.token.userId;
+  usersModel
+    .find({ _id: { $ne: userId } })
+    .then((profiles) => {
+      if (!profiles) {
+        return res.status(200).json({
+          success: false,
+          message: "No profiles",
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: "all profiles",
+        profile: profiles,
       });
     })
     .catch((err) => {
@@ -240,6 +266,7 @@ module.exports = {
   register,
   login,
   getProfile,
+  getAllProfiles,
   addUserPhoto,
   sendFriendReq,
   acceptFriendReq,
