@@ -90,4 +90,55 @@ const login = (req, res) => {
     });
 };
 
-module.exports = { register, login };
+// get profile
+
+const getProfile = (req, res) => {
+  const userId = req.token.userId;
+  usersModel
+    .findOne({ _id: userId })
+    .populate("posts friends role")
+    .then((profile) => {
+      res.status(200).json({
+        success: true,
+        message: "logged in profile",
+        profile: profile,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+// add photo for profile
+const addUserPhoto = (req, res) => {
+  const userId = req.token.userId;
+  const userPhoto = req.body.userPhoto;
+  usersModel
+    .findOneAndUpdate({ _id: userId }, { userPhoto }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `no user login`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: "The user photo updated",
+        result: result.userPhoto,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+module.exports = { register, login, getProfile, addUserPhoto };

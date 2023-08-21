@@ -1,5 +1,6 @@
 const postsModel = require("../models/posts");
 const commentsModel = require("../models/comments");
+const usersModel = require("../models/users");
 const postsRouter = require("../routes/posts");
 
 // create new post
@@ -13,11 +14,22 @@ const createNewPost = (req, res) => {
   newPost
     .save()
     .then((post) => {
-      res.status(201).json({
-        success: true,
-        message: `Post created`,
-        post: post,
-      });
+      usersModel
+        .findOneAndUpdate({ _id: user }, { $push: { posts: post._id } })
+        .then(() => {
+          res.status(201).json({
+            success: true,
+            message: `Post created`,
+            post: post,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            message: `Server Error`,
+            err: err.message,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).json({
@@ -112,6 +124,5 @@ const deletePostById = (req, res) => {
       });
     });
 };
-
 
 module.exports = { createNewPost, getAllPosts, updatePostById, deletePostById };
