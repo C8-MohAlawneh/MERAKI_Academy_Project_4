@@ -1,7 +1,7 @@
 const usersModel = require("../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { findOneAndUpdate } = require("../models/comments");
+
 // register Function
 const register = (req, res) => {
   const { firstName, lastName, email, age, password } = req.body;
@@ -142,6 +142,7 @@ const addUserPhoto = (req, res) => {
     });
 };
 
+// send a friend request
 const sendFriendReq = (req, res) => {
   const friendId = req.params.friendId;
   const userId = req.token.userId;
@@ -169,4 +170,78 @@ const sendFriendReq = (req, res) => {
     });
 };
 
-module.exports = { register, login, getProfile, addUserPhoto, sendFriendReq };
+// this function to accept a friend request
+const acceptFriendReq = (req, res) => {
+  const friendId = req.params.friendId;
+  const userId = req.token.userId;
+  usersModel
+    .findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friendsReq: friendId }, $push: { friends: friendId } },
+      { new: true }
+    )
+    .then((result) => {
+      usersModel
+        .findOneAndUpdate(
+          { _id: friendId },
+          { $push: { friends: userId } },
+          { new: true }
+        )
+        .then(() => {
+          res.status(202).json({
+            success: true,
+            message: "Friend added successfully",
+            result: result.friends,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            message: `Server Error`,
+            err: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+// delete a friend request
+const deleteFriendReq = (req, res) => {
+  const friendId = req.params.friendId;
+  const userId = req.token.userId;
+  usersModel
+    .findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friendsReq: friendId } },
+      { new: true }
+    )
+    .then(() => {
+      res.status(202).json({
+        success: true,
+        message: "Friend request deleted successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+module.exports = {
+  register,
+  login,
+  getProfile,
+  addUserPhoto,
+  sendFriendReq,
+  acceptFriendReq,
+  deleteFriendReq,
+};
