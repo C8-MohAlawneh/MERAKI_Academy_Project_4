@@ -1,6 +1,7 @@
 const usersModel = require("../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { findOneAndUpdate } = require("../models/comments");
 // register Function
 const register = (req, res) => {
   const { firstName, lastName, email, age, password } = req.body;
@@ -141,4 +142,31 @@ const addUserPhoto = (req, res) => {
     });
 };
 
-module.exports = { register, login, getProfile, addUserPhoto };
+const sendFriendReq = (req, res) => {
+  const friendId = req.params.friendId;
+  const userId = req.token.userId;
+  usersModel
+    .findOneAndUpdate(
+      { _id: friendId },
+      { $push: { friendsReq: userId } },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(202).json({
+          success: true,
+          message: "Friend request sent",
+          result: result,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+module.exports = { register, login, getProfile, addUserPhoto, sendFriendReq };
