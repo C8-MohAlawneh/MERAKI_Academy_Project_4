@@ -7,6 +7,7 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 const Posts = () => {
   const { token } = useContext(AppContext);
   const [posts, setPosts] = useState([]);
+  const [createPost, setCreatePost] = useState({});
   const [userId, setUserId] = useState("");
   const [updateBtn, setUpdateBtn] = useState(false);
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
@@ -31,8 +32,29 @@ const Posts = () => {
   return (
     <>
       <div className="create-new-post-container">
-        <input />
-        <button>Post</button>
+        <input
+          placeholder="write something"
+          onChange={(e) => {
+            setCreatePost({ post: e.target.value });
+          }}
+        />
+        <button
+          onClick={() => {
+            axios
+              .post("http://localhost:5000/posts", createPost, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((result) => {
+                setPosts([...posts, result.data.post]);
+                console.log(posts);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }}
+        >
+          Post
+        </button>
       </div>
       <div className="posts-container">
         {posts &&
