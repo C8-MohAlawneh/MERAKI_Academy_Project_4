@@ -28,3 +28,9 @@
 .comment-container {
   background-color: rgb(214, 205, 205);
 }
+.create-new-post-container{
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid #73AD21; */
+  padding: 10px;
+}
