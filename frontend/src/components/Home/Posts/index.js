@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../AppContext";
 import axios from "axios";
 import "./style.css";
+import { BiSolidCheckCircle } from "react-icons/bi";
 
 const Posts = () => {
   const { token } = useContext(AppContext);
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState("");
-  const [updateBtn, setUpdateBtn] = useState(true);
+  const [updateBtn, setUpdateBtn] = useState(false);
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
+  const [updateId, setUpdateId] = useState("");
   useEffect(() => {
     const getAllPosts = () => {
       axios
@@ -24,7 +26,7 @@ const Posts = () => {
         });
     };
     getAllPosts();
-    // console.log(posts);
+    console.log(posts);
   }, []);
   return (
     <div className="posts-container">
@@ -41,24 +43,52 @@ const Posts = () => {
               />
               <h3>{`${post.user.firstName} ${post.user.lastName}`}</h3>
             </div>
-            {/* post content and update */}
+            {/* start post content and update */}
             <div className="post-content">
-              {updateBtn ? (
-                <h4>{post.post}</h4>
-              ) : (
+              {updateBtn && updateId === post._id ? (
                 <>
                   <input
                     defaultValue={post.post}
                     onChange={(e) => {
                       setNewUpdateOfPost({ post: e.target.value });
+                      console.log(newUpdateOfPost);
                     }}
                   />
-                  <button></button>
+                  {
+                    <BiSolidCheckCircle
+                      onClick={() => {
+                        axios
+                          .put(
+                            `http://localhost:5000/posts/${post._id}`,
+                            newUpdateOfPost
+                          )
+                          .then((res) => {
+                            // this function to rerender the updated posts
+                            setPosts(
+                              posts.map((elem) => {
+                                if (elem._id === post._id) {
+                                  elem.post = newUpdateOfPost.post;
+                                  return elem;
+                                }
+                                return elem;
+                              })
+                            );
+                            setUpdateBtn(false);
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                    />
+                  }
                 </>
+              ) : (
+                <h4>{post.post}</h4>
               )}
               {post.user._id === userId && (
                 <button
                   onClick={() => {
+                    setUpdateId(post._id);
                     setUpdateBtn((prv) => {
                       return !prv;
                     });
