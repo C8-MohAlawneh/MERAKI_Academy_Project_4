@@ -44,7 +44,7 @@ const getAllPosts = (req, res) => {
   const userId = req.token.userId;
   postsModel
     .find()
-    .populate("comments likes")
+    .populate("comments likes user")
     .exec()
     .then((posts) => {
       if (posts.length) {
