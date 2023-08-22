@@ -1,0 +1,30 @@
+.post-image {
+  border-radius: 50%;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* .one-post-container{
+    width: 80%;
+    align-self: center;
+  } */
+.one-post {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+/* .post-content{
+  width: 50%;
+  height: 10%;
+  } */
+
+  .comment-container{
+    background-color: rgb(214, 205, 205);
+  }
