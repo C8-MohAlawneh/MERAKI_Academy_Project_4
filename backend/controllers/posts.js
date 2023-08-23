@@ -14,6 +14,7 @@ const createNewPost = (req, res) => {
   newPost
     .save()
     .then((post) => {
+      post.populate("user")
       usersModel
         .findOneAndUpdate({ _id: user }, { $push: { posts: post._id } })
         .then(() => {

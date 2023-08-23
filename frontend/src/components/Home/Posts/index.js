@@ -12,23 +12,24 @@ const Posts = () => {
   const [updateBtn, setUpdateBtn] = useState(false);
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
   const [updateId, setUpdateId] = useState("");
+  const [createComment, setCreateComment] = useState({});
   useEffect(() => {
-    const getAllPosts = () => {
-      axios
-        .get("http://localhost:5000/posts", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((result) => {
-          setPosts(result.data.posts);
-          setUserId(result.data.userId);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
     getAllPosts();
-    // console.log(posts);
+    console.log(posts);
   }, []);
+  const getAllPosts = () => {
+    axios
+      .get("http://localhost:5000/posts", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        setPosts(result.data.posts);
+        setUserId(result.data.userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="create-new-post-container">
@@ -46,7 +47,6 @@ const Posts = () => {
               })
               .then((result) => {
                 setPosts([...posts, result.data.post]);
-                console.log(posts);
               })
               .catch((err) => {
                 console.log(err);
@@ -145,6 +145,7 @@ const Posts = () => {
                     </>
                   )}
                 </div>
+                {/* all comments of post  */}
                 <div className="comment-content">
                   {post.comments.map((comment) => {
                     return (
@@ -153,6 +154,36 @@ const Posts = () => {
                       </div>
                     );
                   })}
+                </div>
+                {/* create new Comment */}
+                <div>
+                  <input
+                    type="string"
+                    placeholder="write a comment"
+                    onChange={(e) => {
+                      setCreateComment({ comment: e.target.value });
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      axios
+                        .post(
+                          `http://localhost:5000/posts/${post._id}/comments`,
+                          createComment,
+                          {
+                            headers: { Authorization: `Bearer ${token}` },
+                          }
+                        )
+                        .then((result) => {
+                          getAllPosts();
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
+                    }}
+                  >
+                    add
+                  </button>
                 </div>
               </div>
             );
