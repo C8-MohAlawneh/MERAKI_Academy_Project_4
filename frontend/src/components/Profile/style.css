@@ -1,0 +1,15 @@
+.profile-image {
+  width: 20vw;
+  height: 20vh;
+  border-radius: 50%;
+}
+.profile-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("https://1fid.com/wp-content/uploads/2022/06/no-profile-picture-4-1024x1024.jpg");
+}
+.body-of-profile{
+    display: flex;
+    justify-content: space-around;
+}
