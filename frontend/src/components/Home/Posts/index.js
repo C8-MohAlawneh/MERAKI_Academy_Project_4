@@ -9,7 +9,8 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
-
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
 const { Meta } = Card;
 
 const Posts = () => {
@@ -21,6 +22,22 @@ const Posts = () => {
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
   const [updateId, setUpdateId] = useState("");
   const [createComment, setCreateComment] = useState({});
+
+  // this items for dropdownlist
+  const items = [
+    {
+      label: <>hehe</>,
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: "3rd menu item",
+      key: "3",
+      danger: true,
+    },
+  ];
   useEffect(() => {
     getAllPosts();
     console.log(posts);
@@ -75,7 +92,13 @@ const Posts = () => {
                   actions={[
                     <SettingOutlined key="setting" />,
                     <EditOutlined key="edit" />,
-                    <EllipsisOutlined key="ellipsis" />,
+                    <Dropdown menu={{ items }} trigger={["click"]}>
+                      <a onClick={(e) => e.preventDefault()}>
+                        <Space>
+                          <DownOutlined />
+                        </Space>
+                      </a>
+                    </Dropdown>,
                   ]}
                 >
                   <Meta
@@ -157,45 +180,45 @@ const Posts = () => {
                     )}
                   </div>
                   {/* all comments of post  */}
-                <div className="comment-content">
-                  {post.comments.map((comment) => {
-                    return (
-                      <div key={comment._id} className="comment-container">
-                        <p>{comment.comment}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-                {/* create new Comment */}
-                <div>
-                  <input
-                    type="string"
-                    placeholder="write a comment"
-                    onChange={(e) => {
-                      setCreateComment({ comment: e.target.value });
-                    }}
-                  />
-                  <button
-                    onClick={() => {
-                      axios
-                        .post(
-                          `http://localhost:5000/posts/${post._id}/comments`,
-                          createComment,
-                          {
-                            headers: { Authorization: `Bearer ${token}` },
-                          }
-                        )
-                        .then((result) => {
-                          getAllPosts();
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                    }}
-                  >
-                    add
-                  </button>
-                </div>
+                  <div className="comment-content">
+                    {post.comments.map((comment) => {
+                      return (
+                        <div key={comment._id} className="comment-container">
+                          <p>{comment.comment}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* create new Comment */}
+                  <div>
+                    <input
+                      type="string"
+                      placeholder="write a comment"
+                      onChange={(e) => {
+                        setCreateComment({ comment: e.target.value });
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        axios
+                          .post(
+                            `http://localhost:5000/posts/${post._id}/comments`,
+                            createComment,
+                            {
+                              headers: { Authorization: `Bearer ${token}` },
+                            }
+                          )
+                          .then((result) => {
+                            getAllPosts();
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                    >
+                      add
+                    </button>
+                  </div>
                 </Card>
                 {/* <div className="poster-info">
                   <img
