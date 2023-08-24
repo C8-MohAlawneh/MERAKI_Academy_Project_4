@@ -41,7 +41,7 @@ const Profile = () => {
             })}
         </div>
         <div className="profile-post">
-        <h3>My Posts</h3>
+          <h3>My Posts</h3>
           {profile.posts &&
             profile.posts.map((post) => {
               return <p>{post.post}</p>;

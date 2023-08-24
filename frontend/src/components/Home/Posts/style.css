@@ -10,8 +10,7 @@
 }
 
 /* .one-post-container{
-    width: 80%;
-    align-self: center;
+    align-content: center;
   } */
 .poster-info {
   display: flex;
