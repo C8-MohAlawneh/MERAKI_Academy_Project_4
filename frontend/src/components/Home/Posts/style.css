@@ -9,9 +9,10 @@
   gap: 20px;
 }
 
-/* .one-post-container{
-    align-content: center;
-  } */
+.one-post-container{
+    width: 70%;
+    align-self: center;
+  }
 .poster-info {
   display: flex;
   flex-direction: row;

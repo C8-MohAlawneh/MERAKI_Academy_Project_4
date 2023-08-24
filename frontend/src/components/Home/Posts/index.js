@@ -9,7 +9,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, LikeOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 const { Meta } = Card;
 
@@ -22,18 +22,48 @@ const Posts = () => {
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
   const [updateId, setUpdateId] = useState("");
   const [createComment, setCreateComment] = useState({});
-
+  const [post1, setPost] = useState({});
   // this items for dropdownlist
   const items = [
     {
-      label: <>hehe</>,
+      label: (
+        <h3
+          onClick={() => {
+            setUpdateId(post1._id);
+            setUpdateBtn((prv) => {
+              return !prv;
+            });
+          }}
+        >
+          update
+        </h3>
+      ),
       key: "1",
     },
     {
       type: "divider",
     },
     {
-      label: "3rd menu item",
+      label: (
+        <h3
+          onClick={() => {
+            axios
+              .delete(`http://localhost:5000/posts/${post1._id}`)
+              .then(() => {
+                setPosts(
+                  posts.filter((elem) => {
+                    return elem._id !== post1._id;
+                  })
+                );
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }}
+        >
+          delete
+        </h3>
+      ),
       key: "3",
       danger: true,
     },
@@ -88,18 +118,27 @@ const Posts = () => {
               <div key={post._id} className="one-post-container">
                 {/* the info of user who post this post */}
                 <Card
-                  style={{ width: 300 }}
-                  actions={[
-                    <SettingOutlined key="setting" />,
-                    <EditOutlined key="edit" />,
-                    <Dropdown menu={{ items }} trigger={["click"]}>
-                      <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                          <DownOutlined />
-                        </Space>
-                      </a>
-                    </Dropdown>,
-                  ]}
+                  style={{ width: "100%" }}
+                  actions={
+                    post.user._id === userId
+                      ? [
+                          <SettingOutlined key="setting" />,
+                          <EditOutlined key="edit" />,
+                          <Dropdown menu={{ items }} trigger={["click"]}>
+                            <a
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setPost(post);
+                              }}
+                            >
+                              <Space>
+                                <DownOutlined />
+                              </Space>
+                            </a>
+                          </Dropdown>,
+                        ]
+                      : [<LikeOutlined />]
+                  }
                 >
                   <Meta
                     avatar={<Avatar src={post.user.userPhoto} />}
@@ -148,7 +187,7 @@ const Posts = () => {
                     {/* this element show the update and delete buttons for the login user*/}
                     {post.user._id === userId && (
                       <>
-                        <button
+                        {/* <button
                           onClick={() => {
                             setUpdateId(post._id);
                             setUpdateBtn((prv) => {
@@ -157,8 +196,8 @@ const Posts = () => {
                           }}
                         >
                           update
-                        </button>
-                        <button
+                        </button> */}
+                        {/* <button
                           onClick={() => {
                             axios
                               .delete(`http://localhost:5000/posts/${post._id}`)
@@ -175,7 +214,7 @@ const Posts = () => {
                           }}
                         >
                           delete
-                        </button>
+                        </button> */}
                       </>
                     )}
                   </div>
