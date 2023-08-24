@@ -3,15 +3,11 @@ import { AppContext } from "../../../AppContext";
 import axios from "axios";
 import "./style.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 import { Avatar, Card } from "antd";
-import { DownOutlined, LikeOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { DownOutlined, LikeOutlined, CommentOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Input } from "antd";
 const { Meta } = Card;
+const { TextArea } = Input;
 
 const Posts = () => {
   const { token } = useContext(AppContext);
@@ -22,14 +18,15 @@ const Posts = () => {
   const [newUpdateOfPost, setNewUpdateOfPost] = useState({});
   const [updateId, setUpdateId] = useState("");
   const [createComment, setCreateComment] = useState({});
-  const [post1, setPost] = useState({});
+  const [onePost, setOnePost] = useState({});
+  const [showComments, setShowComments] = useState(false);
   // this items for dropdownlist
   const items = [
     {
       label: (
         <h3
           onClick={() => {
-            setUpdateId(post1._id);
+            setUpdateId(onePost._id);
             setUpdateBtn((prv) => {
               return !prv;
             });
@@ -48,11 +45,11 @@ const Posts = () => {
         <h3
           onClick={() => {
             axios
-              .delete(`http://localhost:5000/posts/${post1._id}`)
+              .delete(`http://localhost:5000/posts/${onePost._id}`)
               .then(() => {
                 setPosts(
                   posts.filter((elem) => {
-                    return elem._id !== post1._id;
+                    return elem._id !== onePost._id;
                   })
                 );
               })
@@ -88,10 +85,14 @@ const Posts = () => {
   return (
     <>
       <div className="create-new-post-container">
-        <input
-          placeholder="write something"
+        <TextArea
           onChange={(e) => {
             setCreatePost({ post: e.target.value });
+          }}
+          placeholder="write something"
+          autoSize={{
+            minRows: 3,
+            maxRows: 5,
           }}
         />
         <button
@@ -122,13 +123,21 @@ const Posts = () => {
                   actions={
                     post.user._id === userId
                       ? [
-                          <SettingOutlined key="setting" />,
-                          <EditOutlined key="edit" />,
+                          <LikeOutlined key="like" />,
+                          <CommentOutlined
+                            key="comment"
+                            onClick={() => {
+                              setUpdateId(post._id);
+                              setShowComments((prv) => {
+                                return !prv;
+                              });
+                            }}
+                          />,
                           <Dropdown menu={{ items }} trigger={["click"]}>
                             <a
                               onClick={(e) => {
                                 e.preventDefault();
-                                setPost(post);
+                                setOnePost(post);
                               }}
                             >
                               <Space>
@@ -137,7 +146,18 @@ const Posts = () => {
                             </a>
                           </Dropdown>,
                         ]
-                      : [<LikeOutlined />]
+                      : [
+                          <LikeOutlined key="like" />,
+                          <CommentOutlined
+                            key="comment"
+                            onClick={() => {
+                              setUpdateId(post._id);
+                              setShowComments((prv) => {
+                                return !prv;
+                              });
+                            }}
+                          />,
+                        ]
                   }
                 >
                   <Meta
@@ -218,47 +238,8 @@ const Posts = () => {
                       </>
                     )}
                   </div>
-                  {/* all comments of post  */}
-                  <div className="comment-content">
-                    {post.comments.map((comment) => {
-                      return (
-                        <div key={comment._id} className="comment-container">
-                          <p>{comment.comment}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* create new Comment */}
-                  <div>
-                    <input
-                      type="string"
-                      placeholder="write a comment"
-                      onChange={(e) => {
-                        setCreateComment({ comment: e.target.value });
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        axios
-                          .post(
-                            `http://localhost:5000/posts/${post._id}/comments`,
-                            createComment,
-                            {
-                              headers: { Authorization: `Bearer ${token}` },
-                            }
-                          )
-                          .then((result) => {
-                            getAllPosts();
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                          });
-                      }}
-                    >
-                      add
-                    </button>
-                  </div>
                 </Card>
+
                 {/* <div className="poster-info">
                   <img
                     className="post-image"
@@ -343,45 +324,49 @@ const Posts = () => {
                   )}
                 </div> */}
                 {/* all comments of post  */}
-                {/* <div className="comment-content">
-                  {post.comments.map((comment) => {
-                    return (
-                      <div key={comment._id} className="comment-container">
-                        <p>{comment.comment}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-                create new Comment
-                <div>
-                  <input
-                    type="string"
-                    placeholder="write a comment"
-                    onChange={(e) => {
-                      setCreateComment({ comment: e.target.value });
-                    }}
-                  />
-                  <button
-                    onClick={() => {
-                      axios
-                        .post(
-                          `http://localhost:5000/posts/${post._id}/comments`,
-                          createComment,
-                          {
-                            headers: { Authorization: `Bearer ${token}` },
-                          }
-                        )
-                        .then((result) => {
-                          getAllPosts();
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                    }}
-                  >
-                    add
-                  </button>
-                </div> */}
+                {showComments && post._id === updateId && (
+                  <div className="comment-content">
+                    {post.comments.map((comment) => {
+                      return (
+                        <div key={comment._id} className="comment-container">
+                          <p>{comment.comment}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {/* create new Comment */}
+                {showComments && post._id === updateId && (
+                  <div>
+                    <input
+                      type="string"
+                      placeholder="write a comment"
+                      onChange={(e) => {
+                        setCreateComment({ comment: e.target.value });
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        axios
+                          .post(
+                            `http://localhost:5000/posts/${post._id}/comments`,
+                            createComment,
+                            {
+                              headers: { Authorization: `Bearer ${token}` },
+                            }
+                          )
+                          .then((result) => {
+                            getAllPosts();
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                    >
+                      add
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
