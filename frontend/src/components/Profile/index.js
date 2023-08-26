@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 import "./style.css";
+import { Card } from "antd";
 const Profile = () => {
   const { token } = useContext(AppContext);
   const [profile, setProfile] = useState({});
+  
   useEffect(() => {
     getMyProfile();
   }, []);
@@ -47,7 +49,15 @@ const Profile = () => {
               return <p>{post.post}</p>;
             })}
         </div>
-        <div className="my-info"></div>
+        <div className="my-info">
+          <Card
+            title="My Info"
+          >
+            <p>Card content</p>
+            <p>Card content</p>
+            <p>Card content</p>
+          </Card>
+        </div>
       </div>
     </div>
   );
