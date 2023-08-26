@@ -4,9 +4,9 @@ import { AppContext } from "../../AppContext";
 import "./style.css";
 import { Card } from "antd";
 const Profile = () => {
-  const { token } = useContext(AppContext);
+  const { token, image, url, setImage, setUrl } = useContext(AppContext);
   const [profile, setProfile] = useState({});
-  
+
   useEffect(() => {
     getMyProfile();
   }, []);
@@ -20,7 +20,33 @@ const Profile = () => {
       })
       .catch();
   };
-  // console.log(profile.posts[0].post);
+  // upload Image
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "userImage");
+    data.append("cloud_name", "dytlmprs3");
+    fetch("https://api.cloudinary.com/v1_1/dytlmprs3/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUrl(data.url);
+        axios.put(
+          "http://localhost:5000/users/profile/userPhoto",
+          {
+            userPhoto: data.url,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      })
+      .then()
+      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="profile-container">
       <div className="profile-face">
@@ -33,6 +59,15 @@ const Profile = () => {
           }
         />
         <h3>{profile.firstName + " " + profile.lastName}</h3>
+      </div>
+      <div>
+        <div>
+          <input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+          ></input>
+          <button onClick={uploadImage}>Upload</button>
+        </div>
       </div>
       <div className="body-of-profile">
         <div className="friends-container">
@@ -50,9 +85,7 @@ const Profile = () => {
             })}
         </div>
         <div className="my-info">
-          <Card
-            title="My Info"
-          >
+          <Card title="My Info">
             <p>Card content</p>
             <p>Card content</p>
             <p>Card content</p>

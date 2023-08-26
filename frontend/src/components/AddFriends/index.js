@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 
 const AddFriends = () => {
@@ -13,13 +13,14 @@ const AddFriends = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((users) => {
-        console.log(users.data.profile);
+        // console.log(users.data.profile);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
-  return <div>AddFriends</div>;
+
+  return <></>;
 };
 
 export default AddFriends;
