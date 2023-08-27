@@ -329,7 +329,7 @@ const Posts = () => {
                     {post.comments.map((comment) => {
                       return (
                         <div key={comment._id} className="comment-container">
-                          <p>{comment.comment}</p>
+                          <p className="comment-text">{comment.comment}</p>
                         </div>
                       );
                     })}
@@ -337,8 +337,9 @@ const Posts = () => {
                 )}
                 {/* create new Comment */}
                 {showComments && post._id === updateId && (
-                  <div>
+                  <div className="comment-form">
                     <input
+                      className="comment-input"
                       type="string"
                       placeholder="write a comment"
                       onChange={(e) => {
@@ -346,6 +347,7 @@ const Posts = () => {
                       }}
                     />
                     <button
+                      className="comment-button"
                       onClick={() => {
                         axios
                           .post(

@@ -33,18 +33,21 @@ const Profile = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setUrl(data.url);
-        axios.put(
-          "http://localhost:5000/users/profile/userPhoto",
-          {
-            userPhoto: data.url,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        axios
+          .put(
+            "http://localhost:5000/users/profile/userPhoto",
+            {
+              userPhoto: data.url,
+            },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          )
+          .then((result) => {
+            setProfile(result.data.result);
+          })
+          .catch((err) => console.log(err));
       })
-      .then()
-      .catch((err) => console.log(err))
       .catch((err) => console.log(err));
   };
   return (

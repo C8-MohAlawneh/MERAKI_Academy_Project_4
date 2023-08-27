@@ -146,6 +146,7 @@ const addUserPhoto = (req, res) => {
   const userPhoto = req.body.userPhoto;
   usersModel
     .findOneAndUpdate({ _id: userId }, { userPhoto }, { new: true })
+    .populate("posts friends role friendsReq")
     .then((result) => {
       if (!result) {
         return res.status(404).json({
@@ -153,10 +154,11 @@ const addUserPhoto = (req, res) => {
           message: `no user login`,
         });
       }
+      console.log(result);
       res.status(202).json({
         success: true,
         message: "The user photo updated",
-        result: result.userPhoto,
+        result: result,
       });
     })
     .catch((err) => {
