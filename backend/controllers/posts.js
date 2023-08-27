@@ -14,7 +14,7 @@ const createNewPost = (req, res) => {
   newPost
     .save()
     .then((post) => {
-      post.populate("user")
+      post.populate("user");
       usersModel
         .findOneAndUpdate({ _id: user }, { $push: { posts: post._id } })
         .then(() => {
@@ -126,4 +126,20 @@ const deletePostById = (req, res) => {
     });
 };
 
-module.exports = { createNewPost, getAllPosts, updatePostById, deletePostById };
+const addLike = async (req, res) => {
+  const { postId } = req.params;
+  try {
+    await postsModel.findOneAndUpdate({ _id: postId });
+  } catch (err) {}
+};
+
+const removeLike = (req, res) => {};
+
+module.exports = {
+  createNewPost,
+  getAllPosts,
+  updatePostById,
+  deletePostById,
+  addLike,
+  removeLike,
+};

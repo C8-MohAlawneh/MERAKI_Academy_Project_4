@@ -5,6 +5,8 @@ const {
   getAllPosts,
   updatePostById,
   deletePostById,
+  addLike,
+  removeLike,
 } = require("../controllers/posts");
 const {
   createNewComment,
@@ -25,11 +27,19 @@ postsRouter.put("/:id", updatePostById);
 // delete post by id
 postsRouter.delete("/:id", deletePostById);
 
+// add new comment
 postsRouter.post(
   "/:id/comments",
   authentication,
   authorization("ADD_COMMENT"),
   createNewComment
 );
+// delete comment by id
 postsRouter.delete("/:postId/comments/:commentID", deleteCommentById);
+
+// add like
+postsRouter.post("/:postId/likes", authentication, addLike);
+
+postsRouter.delete("/:postId/likes", authentication, removeLike);
+
 module.exports = postsRouter;
