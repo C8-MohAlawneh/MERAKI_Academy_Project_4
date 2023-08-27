@@ -117,7 +117,11 @@ const getProfile = (req, res) => {
 const getAllProfiles = (req, res) => {
   const userId = req.token.userId;
   usersModel
-    .find({ _id: { $ne: userId } })
+    .find({
+      _id: { $ne: userId },
+      friends: { $ne: userId },
+      friendsReq: { $ne: userId },
+    })
     .then((profiles) => {
       if (!profiles) {
         return res.status(200).json({

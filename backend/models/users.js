@@ -16,8 +16,12 @@ const usersSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-  friendsReq: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  friendsReq: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
+  ],
+  friends: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
+  ],
   password: { type: String, required: true },
   userPhoto: { type: String },
 });
