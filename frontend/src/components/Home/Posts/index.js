@@ -20,6 +20,7 @@ const Posts = () => {
   const [createComment, setCreateComment] = useState({});
   const [onePost, setOnePost] = useState({});
   const [showComments, setShowComments] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   // this items for dropdownlist
   const items = [
     {
@@ -123,7 +124,36 @@ const Posts = () => {
                   actions={
                     post.user._id === userId
                       ? [
-                          <LikeOutlined key="like" />,
+                          <LikeOutlined
+                            key="like"
+                            onClick={async () => {
+                              try {
+                                isLiked
+                                  ? await axios.delete(
+                                      `http://localhost:5000/posts/${post._id}/likes`,
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      }
+                                    )
+                                  : await axios.post(
+                                      `http://localhost:5000/posts/${post._id}/likes`,
+                                      "",
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      }
+                                    );
+                                setIsLiked((prv) => {
+                                  return !prv;
+                                });
+                              } catch (err) {
+                                console.log(err);
+                              }
+                            }}
+                          />,
                           <CommentOutlined
                             key="comment"
                             onClick={() => {
@@ -147,7 +177,36 @@ const Posts = () => {
                           </Dropdown>,
                         ]
                       : [
-                          <LikeOutlined key="like" />,
+                          <LikeOutlined
+                            key="like"
+                            onClick={async () => {
+                              try {
+                                isLiked
+                                  ? await axios.delete(
+                                      `http://localhost:5000/posts/${post._id}/likes`,
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      }
+                                    )
+                                  : await axios.post(
+                                      `http://localhost:5000/posts/${post._id}/likes`,
+                                      "",
+                                      {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      }
+                                    );
+                                setIsLiked((prv) => {
+                                  return !prv;
+                                });
+                              } catch (err) {
+                                console.log(err);
+                              }
+                            }}
+                          />,
                           <CommentOutlined
                             key="comment"
                             onClick={() => {

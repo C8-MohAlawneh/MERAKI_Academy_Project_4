@@ -127,13 +127,56 @@ const deletePostById = (req, res) => {
 };
 
 const addLike = async (req, res) => {
+  const userId = req.token.userId;
   const { postId } = req.params;
-  try {
-    await postsModel.findOneAndUpdate({ _id: postId });
-  } catch (err) {}
+
+  postsModel
+    .findOneAndUpdate(
+      { _id: postId },
+      { $push: { likes: userId } },
+      { new: true }
+    )
+    .then((post) => {
+      res.status(202).json({
+        success: true,
+        message: `added like`,
+        post: post,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
 };
 
-const removeLike = (req, res) => {};
+const removeLike = (req, res) => {
+  const { postId } = req.params;
+  const userId = req.token.userId;
+
+  postsModel
+    .findOneAndUpdate(
+      { _id: postId },
+      { $pull: { likes: userId } },
+      { new: true }
+    )
+    .then((post) => {
+      res.status(202).json({
+        success: true,
+        message: `deleted like`,
+        post: post,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
 
 module.exports = {
   createNewPost,
