@@ -6,6 +6,9 @@ const AppContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
+  const [allProfiles, setAllProfiles] = useState([]);
+  const [profile, setProfile] = useState({});
+
   return (
     <AppContext.Provider
       value={{
@@ -17,6 +20,10 @@ const AppContextProvider = ({ children }) => {
         setImage,
         url,
         setUrl,
+        allProfiles,
+        setAllProfiles,
+        profile,
+        setProfile,
       }}
     >
       {children}

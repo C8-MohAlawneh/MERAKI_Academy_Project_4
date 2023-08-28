@@ -268,6 +268,36 @@ const deleteFriendReq = (req, res) => {
     });
 };
 
+const searchUsers = (req, res) => {
+  const { word } = req.params;
+  usersModel
+    .find({
+      $or: [{ firstName: { $regex: word } }, { lastName: { $regex: word } }],
+    })
+    .populate("posts friends role friendsReq")
+    .then((result) => {
+      if (result.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "not found",
+          result: [],
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: "searched successfully",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   register,
   login,
@@ -277,4 +307,5 @@ module.exports = {
   sendFriendReq,
   acceptFriendReq,
   deleteFriendReq,
+  searchUsers,
 };

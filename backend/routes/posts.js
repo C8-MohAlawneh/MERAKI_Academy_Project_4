@@ -39,7 +39,7 @@ postsRouter.delete("/:postId/comments/:commentID", deleteCommentById);
 
 // add like
 postsRouter.post("/:postId/likes", authentication, addLike);
-
+// delete like
 postsRouter.delete("/:postId/likes", authentication, removeLike);
 
 module.exports = postsRouter;

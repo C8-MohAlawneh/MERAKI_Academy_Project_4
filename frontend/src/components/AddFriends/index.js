@@ -5,8 +5,7 @@ import { Avatar, Button, List, Skeleton } from "antd";
 import "./style.css";
 
 const AddFriends = () => {
-  const { token } = useContext(AppContext);
-  const [allProfiles, setAllProfiles] = useState([]);
+  const { token, allProfiles, setAllProfiles } = useContext(AppContext);
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [friendsReq, setFriendsReq] = useState([]);
@@ -49,9 +48,7 @@ const AddFriends = () => {
           height: 32,
           lineHeight: "32px",
         }}
-      >
-        <Button>loading more</Button>
-      </div>
+      ></div>
     ) : null;
   return (
     <div>
