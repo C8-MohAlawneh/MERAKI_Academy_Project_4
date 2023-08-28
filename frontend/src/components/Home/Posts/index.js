@@ -69,7 +69,6 @@ const Posts = () => {
   ];
   useEffect(() => {
     getAllPosts();
-    console.log(posts);
   }, []);
   const getAllPosts = () => {
     axios
@@ -121,46 +120,52 @@ const Posts = () => {
                   actions={
                     post.user._id === userId
                       ? [
-                          <LikeOutlined
-                            className="like"
-                            key="like"
-                            onClick={async () => {
-                              try {
-                                isLiked
-                                  ? await axios.delete(
-                                      `http://localhost:5000/posts/${post._id}/likes`,
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      }
-                                    )
-                                  : await axios.post(
-                                      `http://localhost:5000/posts/${post._id}/likes`,
-                                      "",
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      }
-                                    );
-                                setIsLiked((prv) => {
+                          <>
+                            <LikeOutlined
+                              className="like"
+                              key="like"
+                              onClick={async () => {
+                                try {
+                                  isLiked
+                                    ? await axios.delete(
+                                        `http://localhost:5000/posts/${post._id}/likes`,
+                                        {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      )
+                                    : await axios.post(
+                                        `http://localhost:5000/posts/${post._id}/likes`,
+                                        "",
+                                        {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      );
+                                  setIsLiked((prv) => {
+                                    return !prv;
+                                  });
+                                } catch (err) {
+                                  console.log(err);
+                                }
+                              }}
+                            />
+                            likes:{post.likes.length}
+                          </>,
+                          <>
+                            <CommentOutlined
+                              key="comment"
+                              onClick={() => {
+                                setUpdateId(post._id);
+                                setShowComments((prv) => {
                                   return !prv;
                                 });
-                              } catch (err) {
-                                console.log(err);
-                              }
-                            }}
-                          />,
-                          <CommentOutlined
-                            key="comment"
-                            onClick={() => {
-                              setUpdateId(post._id);
-                              setShowComments((prv) => {
-                                return !prv;
-                              });
-                            }}
-                          />,
+                              }}
+                            />
+                            comments:{post.comments.length}
+                          </>,
                           <Dropdown menu={{ items }} trigger={["click"]}>
                             <a
                               onClick={(e) => {
@@ -175,45 +180,51 @@ const Posts = () => {
                           </Dropdown>,
                         ]
                       : [
-                          <LikeOutlined
-                            key="like"
-                            onClick={async () => {
-                              try {
-                                isLiked
-                                  ? await axios.delete(
-                                      `http://localhost:5000/posts/${post._id}/likes`,
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      }
-                                    )
-                                  : await axios.post(
-                                      `http://localhost:5000/posts/${post._id}/likes`,
-                                      "",
-                                      {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      }
-                                    );
-                                setIsLiked((prv) => {
+                          <>
+                            <LikeOutlined
+                              key="like"
+                              onClick={async () => {
+                                try {
+                                  isLiked
+                                    ? await axios.delete(
+                                        `http://localhost:5000/posts/${post._id}/likes`,
+                                        {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      )
+                                    : await axios.post(
+                                        `http://localhost:5000/posts/${post._id}/likes`,
+                                        "",
+                                        {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      );
+                                  setIsLiked((prv) => {
+                                    return !prv;
+                                  });
+                                } catch (err) {
+                                  console.log(err);
+                                }
+                              }}
+                            />
+                            likes:{post.likes.length}
+                          </>,
+                          <>
+                            <CommentOutlined
+                              key="comment"
+                              onClick={() => {
+                                setUpdateId(post._id);
+                                setShowComments((prv) => {
                                   return !prv;
                                 });
-                              } catch (err) {
-                                console.log(err);
-                              }
-                            }}
-                          />,
-                          <CommentOutlined
-                            key="comment"
-                            onClick={() => {
-                              setUpdateId(post._id);
-                              setShowComments((prv) => {
-                                return !prv;
-                              });
-                            }}
-                          />,
+                              }}
+                            />
+                            , comments:{post.comments.length}
+                          </>,
                         ]
                   }
                 >

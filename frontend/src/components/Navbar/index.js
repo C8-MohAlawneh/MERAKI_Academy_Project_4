@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "./Logo.png";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../AppContext";
@@ -9,9 +9,28 @@ const { Search } = Input;
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { setToken, setIsLoggedIn, setAllProfiles, profile, setProfile } =
-    useContext(AppContext);
+  const {
+    setToken,
+    setIsLoggedIn,
+    setAllProfiles,
+    profile,
+    setProfile,
+    token,
+  } = useContext(AppContext);
   const [searchByName, setSearchByName] = useState("");
+  useEffect(() => {
+    getMyProfile();
+  }, []);
+  const getMyProfile = () => {
+    axios
+      .get("http://localhost:5000/users/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        setProfile(result.data.profile);
+      })
+      .catch();
+  };
   return (
     <div className="home-nav-bar">
       <img

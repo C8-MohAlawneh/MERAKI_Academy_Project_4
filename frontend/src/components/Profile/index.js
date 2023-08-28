@@ -9,7 +9,19 @@ const Profile = () => {
     useContext(AppContext);
   const [uploadImg, setUploadImg] = useState(false);
 
- 
+  useEffect(() => {
+    getMyProfile();
+  }, []);
+  const getMyProfile = () => {
+    axios
+      .get("http://localhost:5000/users/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        setProfile(result.data.profile);
+      })
+      .catch();
+  };
   // upload Image
   const uploadImage = () => {
     const data = new FormData();
