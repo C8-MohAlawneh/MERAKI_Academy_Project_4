@@ -178,8 +178,6 @@ const removeLike = (req, res) => {
     });
 };
 
-
-
 module.exports = {
   createNewPost,
   getAllPosts,

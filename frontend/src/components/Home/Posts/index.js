@@ -220,6 +220,17 @@ const Posts = () => {
                   <Meta
                     avatar={<Avatar src={post.user.userPhoto} />}
                     title={`${post.user.firstName} ${post.user.lastName}`}
+                    description={`${new Date(post.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        weekday: "short",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }
+                    )} at ${new Date(post.createdAt).toLocaleTimeString(
+                      "en-US"
+                    )}`}
                   />
                   {/* start post content and update */}
                   <div className="post-content">

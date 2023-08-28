@@ -2,26 +2,14 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 import "./style.css";
-import { Avatar, Button, List, Skeleton, Card } from "antd";
-import Posts from "../Home/Posts";
+import { Avatar, List, Skeleton,  } from "antd";
+
 const Profile = () => {
   const { token, image, url, setImage, setUrl, profile, setProfile } =
     useContext(AppContext);
   const [uploadImg, setUploadImg] = useState(false);
 
-  useEffect(() => {
-    getMyProfile();
-  }, []);
-  const getMyProfile = () => {
-    axios
-      .get("http://localhost:5000/users/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((result) => {
-        setProfile(result.data.profile);
-      })
-      .catch();
-  };
+ 
   // upload Image
   const uploadImage = () => {
     const data = new FormData();

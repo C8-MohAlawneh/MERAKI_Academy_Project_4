@@ -9,7 +9,8 @@ const { Search } = Input;
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { setToken, setIsLoggedIn, setAllProfiles } = useContext(AppContext);
+  const { setToken, setIsLoggedIn, setAllProfiles, profile, setProfile } =
+    useContext(AppContext);
   const [searchByName, setSearchByName] = useState("");
   return (
     <div className="home-nav-bar">
@@ -40,7 +41,7 @@ const Navbar = () => {
         }}
       />
       <Avatar
-        src=""
+        src={profile.userPhoto}
         onClick={() => {
           navigate("/profile");
         }}
@@ -56,6 +57,7 @@ const Navbar = () => {
           setToken(null);
           setIsLoggedIn(false);
           navigate("/login");
+          setProfile({});
         }}
       />
     </div>

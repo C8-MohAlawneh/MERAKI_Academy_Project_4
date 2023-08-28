@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
@@ -8,7 +9,21 @@ const AppContextProvider = ({ children }) => {
   const [url, setUrl] = useState("");
   const [allProfiles, setAllProfiles] = useState([]);
   const [profile, setProfile] = useState({});
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      getMyProfile();
+    }
+  }, []);
+  const getMyProfile = () => {
+    axios
+      .get("http://localhost:5000/users/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((result) => {
+        setProfile(result.data.profile);
+      })
+      .catch();
+  };
   return (
     <AppContext.Provider
       value={{
