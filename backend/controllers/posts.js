@@ -136,7 +136,9 @@ const addLike = async (req, res) => {
       { $push: { likes: userId } },
       { new: true }
     )
+    .populate("comments likes user")
     .then((post) => {
+      console.log(post);
       res.status(202).json({
         success: true,
         message: `added like`,

@@ -135,15 +135,25 @@ const Posts = () => {
                                           },
                                         }
                                       )
-                                    : await axios.post(
-                                        `http://localhost:5000/posts/${post._id}/likes`,
-                                        "",
-                                        {
-                                          headers: {
-                                            Authorization: `Bearer ${token}`,
-                                          },
-                                        }
-                                      );
+                                    : await axios
+                                        .post(
+                                          `http://localhost:5000/posts/${post._id}/likes`,
+                                          "",
+                                          {
+                                            headers: {
+                                              Authorization: `Bearer ${token}`,
+                                            },
+                                          }
+                                        )
+                                        .then((result) => {
+                                          setPosts(
+                                            posts.map((elem) => {
+                                              return post._id === elem._id
+                                                ? result.data.post
+                                                : elem;
+                                            })
+                                          );
+                                        });
                                   setIsLiked((prv) => {
                                     return !prv;
                                   });
@@ -194,15 +204,25 @@ const Posts = () => {
                                           },
                                         }
                                       )
-                                    : await axios.post(
-                                        `http://localhost:5000/posts/${post._id}/likes`,
-                                        "",
-                                        {
-                                          headers: {
-                                            Authorization: `Bearer ${token}`,
-                                          },
-                                        }
-                                      );
+                                    : await axios
+                                        .post(
+                                          `http://localhost:5000/posts/${post._id}/likes`,
+                                          "",
+                                          {
+                                            headers: {
+                                              Authorization: `Bearer ${token}`,
+                                            },
+                                          }
+                                        )
+                                        .then((result) => {
+                                          setPosts(
+                                            posts.map((elem) => {
+                                              return post._id === elem._id
+                                                ? result.data.post
+                                                : elem;
+                                            })
+                                          );
+                                        });
                                   setIsLiked((prv) => {
                                     return !prv;
                                   });
