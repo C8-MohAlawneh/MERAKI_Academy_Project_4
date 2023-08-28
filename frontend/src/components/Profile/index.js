@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 import "./style.css";
 import { Card } from "antd";
+import Posts from "../Home/Posts";
 const Profile = () => {
   const { token, image, url, setImage, setUrl } = useContext(AppContext);
   const [profile, setProfile] = useState({});
-
+  const [uploadImg, setUploadImg] = useState(false);
   useEffect(() => {
     getMyProfile();
   }, []);
@@ -54,6 +55,9 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-face">
         <img
+          onClick={() => {
+            setUploadImg((prv) => !prv);
+          }}
           className="profile-image"
           src={
             profile.userPhoto
@@ -63,15 +67,17 @@ const Profile = () => {
         />
         <h3>{profile.firstName + " " + profile.lastName}</h3>
       </div>
-      <div>
-        <div>
-          <input
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-          ></input>
-          <button onClick={uploadImage}>Upload</button>
+      {uploadImg && (
+        <div className="upload-image">
+          <div>
+            <input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+            ></input>
+            <button onClick={uploadImage}>update</button>
+          </div>
         </div>
-      </div>
+      )}
       <div className="body-of-profile">
         <div className="friends-container">
           <h3>My Friends</h3>

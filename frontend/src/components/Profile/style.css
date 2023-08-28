@@ -9,7 +9,12 @@
   align-items: center;
   background-image: url("https://1fid.com/wp-content/uploads/2022/06/no-profile-picture-4-1024x1024.jpg");
 }
-.body-of-profile{
-    display: flex;
-    justify-content: space-around;
+.body-of-profile {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.upload-image {
+  display: flex;
+  justify-content: center;
 }

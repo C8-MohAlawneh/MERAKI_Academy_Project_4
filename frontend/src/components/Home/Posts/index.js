@@ -21,6 +21,7 @@ const Posts = () => {
   const [onePost, setOnePost] = useState({});
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+
   // this items for dropdownlist
   const items = [
     {
@@ -91,10 +92,6 @@ const Posts = () => {
             setCreatePost({ post: e.target.value });
           }}
           placeholder="write something"
-          autoSize={{
-            minRows: 3,
-            maxRows: 5,
-          }}
         />
         <button
           onClick={() => {
@@ -125,6 +122,7 @@ const Posts = () => {
                     post.user._id === userId
                       ? [
                           <LikeOutlined
+                            className="like"
                             key="like"
                             onClick={async () => {
                               try {
@@ -263,125 +261,8 @@ const Posts = () => {
                     ) : (
                       <h4>{post.post}</h4>
                     )}
-                    {/* this element show the update and delete buttons for the login user*/}
-                    {post.user._id === userId && (
-                      <>
-                        {/* <button
-                          onClick={() => {
-                            setUpdateId(post._id);
-                            setUpdateBtn((prv) => {
-                              return !prv;
-                            });
-                          }}
-                        >
-                          update
-                        </button> */}
-                        {/* <button
-                          onClick={() => {
-                            axios
-                              .delete(`http://localhost:5000/posts/${post._id}`)
-                              .then(() => {
-                                setPosts(
-                                  posts.filter((elem) => {
-                                    return elem._id !== post._id;
-                                  })
-                                );
-                              })
-                              .catch((err) => {
-                                console.log(err);
-                              });
-                          }}
-                        >
-                          delete
-                        </button> */}
-                      </>
-                    )}
                   </div>
                 </Card>
-
-                {/* <div className="poster-info">
-                  <img
-                    className="post-image"
-                    src={post.user.userPhoto}
-                    width={50}
-                    height={50}
-                  />
-                  <h3>{`${post.user.firstName} ${post.user.lastName}`}</h3>
-                </div> */}
-                {/* start post content and update */}
-                {/* <div className="post-content">
-                  {updateBtn && updateId === post._id ? (
-                    <>
-                      <input
-                        defaultValue={post.post}
-                        onChange={(e) => {
-                          setNewUpdateOfPost({ post: e.target.value });
-                        }}
-                      />
-                      {
-                        <BiSolidCheckCircle
-                          onClick={() => {
-                            axios
-                              .put(
-                                `http://localhost:5000/posts/${post._id}`,
-                                newUpdateOfPost
-                              )
-                              .then((res) => {
-                                // this function to rerender the updated posts
-                                setPosts(
-                                  posts.map((elem) => {
-                                    if (elem._id === post._id) {
-                                      elem.post = newUpdateOfPost.post;
-                                    }
-                                    return elem;
-                                  })
-                                );
-                                setUpdateBtn(false);
-                              })
-                              .catch((err) => {
-                                console.log(err);
-                              });
-                          }}
-                        />
-                      }
-                    </>
-                  ) : (
-                    <h4>{post.post}</h4>
-                  )}
-                  this element show the update and delete buttons for the login user
-                  {post.user._id === userId && (
-                    <>
-                      <button
-                        onClick={() => {
-                          setUpdateId(post._id);
-                          setUpdateBtn((prv) => {
-                            return !prv;
-                          });
-                        }}
-                      >
-                        update
-                      </button>
-                      <button
-                        onClick={() => {
-                          axios
-                            .delete(`http://localhost:5000/posts/${post._id}`)
-                            .then(() => {
-                              setPosts(
-                                posts.filter((elem) => {
-                                  return elem._id !== post._id;
-                                })
-                              );
-                            })
-                            .catch((err) => {
-                              console.log(err);
-                            });
-                        }}
-                      >
-                        delete
-                      </button>
-                    </>
-                  )}
-                </div> */}
                 {/* all comments of post  */}
                 {showComments && post._id === updateId && (
                   <div className="comment-content">
