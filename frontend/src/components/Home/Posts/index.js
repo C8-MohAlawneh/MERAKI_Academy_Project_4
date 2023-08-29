@@ -4,7 +4,13 @@ import axios from "axios";
 import "./style.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
 import { Avatar, Card } from "antd";
-import { DownOutlined, LikeOutlined, CommentOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  LikeOutlined,
+  CommentOutlined,
+  LikeTwoTone,
+  LikeFilled,
+} from "@ant-design/icons";
 import { Dropdown, Space, Input } from "antd";
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -127,14 +133,24 @@ const Posts = () => {
                               onClick={async () => {
                                 try {
                                   isLiked
-                                    ? await axios.delete(
-                                        `http://localhost:5000/posts/${post._id}/likes`,
-                                        {
-                                          headers: {
-                                            Authorization: `Bearer ${token}`,
-                                          },
-                                        }
-                                      )
+                                    ? await axios
+                                        .delete(
+                                          `http://localhost:5000/posts/${post._id}/likes`,
+                                          {
+                                            headers: {
+                                              Authorization: `Bearer ${token}`,
+                                            },
+                                          }
+                                        )
+                                        .then((result) => {
+                                          setPosts(
+                                            posts.map((elem) => {
+                                              return post._id === elem._id
+                                                ? result.data.post
+                                                : elem;
+                                            })
+                                          );
+                                        })
                                     : await axios
                                         .post(
                                           `http://localhost:5000/posts/${post._id}/likes`,
@@ -191,19 +207,34 @@ const Posts = () => {
                         ]
                       : [
                           <>
-                            <LikeOutlined
+                            <LikeFilled
                               key="like"
+                              style={
+                                post.likes.includes(userId)
+                                  ? { color: "blue" }
+                                  : { color: "grey" }
+                              }
                               onClick={async () => {
                                 try {
                                   isLiked
-                                    ? await axios.delete(
-                                        `http://localhost:5000/posts/${post._id}/likes`,
-                                        {
-                                          headers: {
-                                            Authorization: `Bearer ${token}`,
-                                          },
-                                        }
-                                      )
+                                    ? await axios
+                                        .delete(
+                                          `http://localhost:5000/posts/${post._id}/likes`,
+                                          {
+                                            headers: {
+                                              Authorization: `Bearer ${token}`,
+                                            },
+                                          }
+                                        )
+                                        .then((result) => {
+                                          setPosts(
+                                            posts.map((elem) => {
+                                              return post._id === elem._id
+                                                ? result.data.post
+                                                : elem;
+                                            })
+                                          );
+                                        })
                                     : await axios
                                         .post(
                                           `http://localhost:5000/posts/${post._id}/likes`,

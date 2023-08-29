@@ -164,6 +164,7 @@ const removeLike = (req, res) => {
       { $pull: { likes: userId } },
       { new: true }
     )
+    .populate("comments likes user")
     .then((post) => {
       res.status(202).json({
         success: true,
