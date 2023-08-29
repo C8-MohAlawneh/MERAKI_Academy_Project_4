@@ -66,11 +66,13 @@ const Navbar = () => {
         }}
       />
       <UsergroupAddOutlined
+        style={{ color: "blue" }}
         onClick={() => {
           navigate("/addFriends");
         }}
       />
       <LogoutOutlined
+        style={{ color: "red" }}
         onClick={() => {
           localStorage.clear();
           setToken(null);

@@ -3,7 +3,7 @@ import { AppContext } from "../../../AppContext";
 import axios from "axios";
 import "./style.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
-import { Avatar, Card } from "antd";
+import { Avatar, Button, Card } from "antd";
 import {
   DownOutlined,
   LikeOutlined,
@@ -16,7 +16,7 @@ const { Meta } = Card;
 const { TextArea } = Input;
 
 const Posts = () => {
-  const { token } = useContext(AppContext);
+  const { token, profile } = useContext(AppContext);
   const [posts, setPosts] = useState([]);
   const [createPost, setCreatePost] = useState({});
   const [userId, setUserId] = useState("");
@@ -91,29 +91,37 @@ const Posts = () => {
   };
   return (
     <>
-      <div className="create-new-post-container">
-        <TextArea
-          onChange={(e) => {
-            setCreatePost({ post: e.target.value });
-          }}
-          placeholder="write something"
-        />
-        <button
-          onClick={() => {
-            axios
-              .post("http://localhost:5000/posts", createPost, {
-                headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((result) => {
-                setPosts([...posts, result.data.post]);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }}
-        >
-          Post
-        </button>
+      <div className="create-new-post-container"> 
+        <Card bordered={false}>
+          <Meta
+            avatar={<Avatar src={profile.userPhoto} />}
+            title={`${profile.firstName} ${profile.lastName}`}
+          />
+          <TextArea
+            className="create-post-input"
+            onChange={(e) => {
+              setCreatePost({ post: e.target.value });
+            }}
+            placeholder="write something"
+          />
+          <Button
+            className="create-post-btn"
+            onClick={() => {
+              axios
+                .post("http://localhost:5000/posts", createPost, {
+                  headers: { Authorization: `Bearer ${token}` },
+                })
+                .then((result) => {
+                  setPosts([...posts, result.data.post]);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }}
+          >
+            Post
+          </Button>
+        </Card>
       </div>
       <div className="posts-container">
         {posts &&
@@ -127,9 +135,14 @@ const Posts = () => {
                     post.user._id === userId
                       ? [
                           <>
-                            <LikeOutlined
+                            <LikeFilled
                               className="like"
                               key="like"
+                              style={
+                                userId && post.likes.includes(userId)
+                                  ? { color: "blue" }
+                                  : { color: "grey" }
+                              }
                               onClick={async () => {
                                 try {
                                   isLiked
@@ -210,9 +223,7 @@ const Posts = () => {
                             <LikeFilled
                               key="like"
                               style={
-                                post.likes.includes(userId)
-                                  ? { color: "blue" }
-                                  : { color: "grey" }
+                                isLiked ? { color: "blue" } : { color: "grey" }
                               }
                               onClick={async () => {
                                 try {
@@ -274,7 +285,7 @@ const Posts = () => {
                                 });
                               }}
                             />
-                            , comments:{post.comments.length}
+                            comments:{post.comments.length}
                           </>,
                         ]
                   }
@@ -299,6 +310,7 @@ const Posts = () => {
                     {updateBtn && updateId === post._id ? (
                       <>
                         <input
+                          className="post-and-input"
                           defaultValue={post.post}
                           onChange={(e) => {
                             setNewUpdateOfPost({ post: e.target.value });
@@ -332,7 +344,9 @@ const Posts = () => {
                         }
                       </>
                     ) : (
-                      <h4>{post.post}</h4>
+                      <div className="post-and-input">
+                        <h4>{post.post}</h4>
+                      </div>
                     )}
                   </div>
                 </Card>

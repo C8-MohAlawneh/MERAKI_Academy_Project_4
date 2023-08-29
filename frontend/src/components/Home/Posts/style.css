@@ -87,4 +87,15 @@
 .comment-text:last-child {
   margin-bottom: 0;
 }
-
+.post-and-input {
+  width: 100%;
+  margin-top: 5px;
+  height: 10vh;
+  align-self: center;
+}
+.create-post-input {
+  margin-top: 20px;
+}
+.create-post-btn {
+  left: 200px;
+}
