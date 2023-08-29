@@ -91,39 +91,39 @@ const Posts = () => {
   };
   return (
     <>
-      <div className="create-new-post-container"> 
-        <Card bordered={false}>
-          <Meta
-            avatar={<Avatar src={profile.userPhoto} />}
-            title={`${profile.firstName} ${profile.lastName}`}
-          />
-          <TextArea
-            className="create-post-input"
-            onChange={(e) => {
-              setCreatePost({ post: e.target.value });
-            }}
-            placeholder="write something"
-          />
-          <Button
-            className="create-post-btn"
-            onClick={() => {
-              axios
-                .post("http://localhost:5000/posts", createPost, {
-                  headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((result) => {
-                  setPosts([...posts, result.data.post]);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }}
-          >
-            Post
-          </Button>
-        </Card>
-      </div>
       <div className="posts-container">
+        <div className="one-post-container">
+          <Card bordered={true} style={{ width: "100%" }}>
+            <Meta
+              avatar={<Avatar src={profile.userPhoto} />}
+              title={`${profile.firstName} ${profile.lastName}`}
+            />
+            <TextArea
+              className="create-post-input"
+              onChange={(e) => {
+                setCreatePost({ post: e.target.value });
+              }}
+              placeholder="write something"
+            />
+            <Button
+              className="create-post-btn"
+              onClick={() => {
+                axios
+                  .post("http://localhost:5000/posts", createPost, {
+                    headers: { Authorization: `Bearer ${token}` },
+                  })
+                  .then((result) => {
+                    setPosts([...posts, result.data.post]);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              Post
+            </Button>
+          </Card>
+        </div>
         {posts &&
           posts.map((post) => {
             return (
@@ -205,18 +205,21 @@ const Posts = () => {
                             />
                             comments:{post.comments.length}
                           </>,
-                          <Dropdown menu={{ items }} trigger={["click"]}>
-                            <a
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setOnePost(post);
-                              }}
-                            >
-                              <Space>
-                                <DownOutlined />
-                              </Space>
-                            </a>
-                          </Dropdown>,
+                          <>
+                            <Dropdown menu={{ items }} trigger={["click"]}>
+                              <a
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setOnePost(post);
+                                }}
+                              >
+                                <Space>
+                                  <DownOutlined />
+                                </Space>
+                              </a>
+                            </Dropdown>
+                            edit
+                          </>,
                         ]
                       : [
                           <>
@@ -309,8 +312,7 @@ const Posts = () => {
                   <div className="post-content">
                     {updateBtn && updateId === post._id ? (
                       <>
-                        <input
-                          className="post-and-input"
+                        <TextArea
                           defaultValue={post.post}
                           onChange={(e) => {
                             setNewUpdateOfPost({ post: e.target.value });

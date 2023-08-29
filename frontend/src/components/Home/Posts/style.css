@@ -13,6 +13,7 @@
   width: 70%;
   align-self: center;
 }
+
 .poster-info {
   display: flex;
   flex-direction: row;
@@ -28,12 +29,12 @@
 .comment-container {
   background-color: rgb(214, 205, 205);
 }
-.create-new-post-container {
+/* .create-new-post-container {
   margin: auto;
   width: 50%;
-  /* border: 3px solid #73AD21; */
+  border: 3px solid #73AD21;
   padding: 10px;
-}
+} */
 
 /* comments design */
 .comment-form {
@@ -96,6 +97,4 @@
 .create-post-input {
   margin-top: 20px;
 }
-.create-post-btn {
-  left: 200px;
-}
+
