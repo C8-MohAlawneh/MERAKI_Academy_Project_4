@@ -8,8 +8,6 @@ const Home = () => {
   return (
     <div className="home-page">
       <Sidebar />
-      <Posts />
-      <Weather />
     </div>
   );
 };

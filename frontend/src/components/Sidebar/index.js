@@ -7,10 +7,13 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
-const { Header, Sider, Content } = Layout;
+import Posts from "../Home/Posts";
+import Weather from "../Home/Weather";
+import "./style.css";
+const { Header, Sider, Content, Footer } = Layout;
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const {
     token: { colorBgContainer },
@@ -62,6 +65,26 @@ const Sidebar = () => {
               }}
             />
           </Header>
+          <Content
+            style={{
+              margin: "24px 16px",
+              padding: 24,
+              minHeight: 280,
+              background: colorBgContainer,
+            }}
+          >
+            <div className="side-bar-content">
+              <Posts />
+              <Weather />
+            </div>
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Ant Design ©2023 Created by Ant UED
+          </Footer>
         </Layout>
       </Layout>
     </>

@@ -30,6 +30,7 @@ const Register = () => {
         <label htmlFor="lastName">
           <b>Last Name</b>
         </label>
+        <br />
         <input
           type="text"
           placeholder="Last Name"

@@ -1,0 +1,6 @@
+.side-bar-content {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 3%;
+  justify-content: space-around;
+}
