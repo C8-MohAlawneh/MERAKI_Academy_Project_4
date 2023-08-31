@@ -5,12 +5,15 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  HomeOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import Posts from "../Home/Posts";
 import Weather from "../Home/Weather";
 import "./style.css";
 import { AppContext } from "../../AppContext";
+import FooterJS from "../FooterJS";
 const { Header, Sider, Content, Footer } = Layout;
 
 const Sidebar = () => {
@@ -27,22 +30,28 @@ const Sidebar = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["2"]}
+            defaultSelectedKeys={["0"]}
             items={[
+              { key: "0", icon: <HomeOutlined />, label: "Home" },
               {
                 key: "1",
                 icon: <UserOutlined />,
-                label: "nav 1",
+                label: "Profile",
               },
               {
                 key: "2",
-                icon: <VideoCameraOutlined />,
-                label: "nav 2",
+                icon: <UsergroupAddOutlined />,
+                label: "Add Friends",
               },
               {
                 key: "3",
+                icon: <VideoCameraOutlined />,
+                label: "Videos",
+              },
+              {
+                key: "4",
                 icon: <UploadOutlined />,
-                label: "nav 3",
+                label: "UploadImage",
               },
             ]}
           />
@@ -83,7 +92,7 @@ const Sidebar = () => {
               textAlign: "center",
             }}
           >
-            Ant Design ©2023 Created by Ant UED
+            <FooterJS />
           </Footer>
         </Layout>
       </Layout>

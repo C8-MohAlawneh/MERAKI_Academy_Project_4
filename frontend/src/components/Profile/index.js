@@ -4,13 +4,14 @@ import { AppContext } from "../../AppContext";
 import "./style.css";
 import { Avatar, List, Skeleton, Layout, Menu, Button, theme } from "antd";
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  HomeOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
-const { Header, Sider, Content, Footer } = Layout;
+import FooterJS from "../FooterJS";
+const { Sider, Content, Footer } = Layout;
 
 const Profile = () => {
   const {
@@ -77,22 +78,28 @@ const Profile = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["2"]}
+          defaultSelectedKeys={["1"]}
           items={[
+            { key: "0", icon: <HomeOutlined />, label: "Home" },
             {
               key: "1",
               icon: <UserOutlined />,
-              label: "nav 1",
+              label: "Profile",
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              icon: <UsergroupAddOutlined />,
+              label: "Add Friends",
             },
             {
               key: "3",
+              icon: <VideoCameraOutlined />,
+              label: "Videos",
+            },
+            {
+              key: "4",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: "UploadImage",
             },
           ]}
         />
@@ -212,7 +219,7 @@ const Profile = () => {
             textAlign: "center",
           }}
         >
-          Ant Design ©2023 Created by Ant UED
+          <FooterJS />
         </Footer>
       </Layout>
     </Layout>
