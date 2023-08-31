@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -10,11 +10,11 @@ import { Layout, Menu, Button, theme } from "antd";
 import Posts from "../Home/Posts";
 import Weather from "../Home/Weather";
 import "./style.css";
+import { AppContext } from "../../AppContext";
 const { Header, Sider, Content, Footer } = Layout;
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(true);
-
+  const { collapsed, setCollapsed } = useContext(AppContext);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -27,7 +27,7 @@ const Sidebar = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={["2"]}
             items={[
               {
                 key: "1",

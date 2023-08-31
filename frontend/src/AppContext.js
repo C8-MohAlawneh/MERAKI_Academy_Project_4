@@ -8,6 +8,7 @@ const AppContextProvider = ({ children }) => {
   const [url, setUrl] = useState("");
   const [allProfiles, setAllProfiles] = useState([]);
   const [profile, setProfile] = useState({});
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <AppContext.Provider
@@ -24,6 +25,8 @@ const AppContextProvider = ({ children }) => {
         setAllProfiles,
         profile,
         setProfile,
+        collapsed,
+        setCollapsed,
       }}
     >
       {children}
