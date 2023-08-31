@@ -9,11 +9,11 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
-import Posts from "../Home/Posts";
-import Weather from "../Home/Weather";
+import Posts from "../Posts";
+import Weather from "../Weather";
 import "./style.css";
-import { AppContext } from "../../AppContext";
-import FooterJS from "../FooterJS";
+import { AppContext } from "../../../AppContext";
+import FooterJS from "../../FooterJS";
 const { Header, Sider, Content, Footer } = Layout;
 
 const Sidebar = () => {

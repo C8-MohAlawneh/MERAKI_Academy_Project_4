@@ -369,7 +369,12 @@ const Posts = () => {
                     {post.comments.map((comment) => {
                       return (
                         <div key={comment._id} className="comment-container">
-                          <p className="comment-text">{comment.comment}</p>
+                          <p className="comment-text">
+                            <span>
+                              <Avatar src={comment.commenter.userPhoto} />
+                            </span>
+                            {comment.comment}
+                          </p>
                         </div>
                       );
                     })}

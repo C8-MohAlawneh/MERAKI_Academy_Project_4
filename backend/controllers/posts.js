@@ -46,6 +46,13 @@ const getAllPosts = (req, res) => {
   postsModel
     .find()
     .populate("comments likes user")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "commenter",
+      },
+    })
+
     .exec()
     .then((posts) => {
       if (posts.length) {
@@ -138,7 +145,6 @@ const addLike = async (req, res) => {
     )
     .populate("comments likes user")
     .then((post) => {
-      console.log(post);
       res.status(202).json({
         success: true,
         message: `added like`,
@@ -164,7 +170,6 @@ const removeLike = (req, res) => {
       { $pull: { likes: userId } },
       { new: true }
     )
-    .populate("comments likes user")
     .then((post) => {
       res.status(202).json({
         success: true,
