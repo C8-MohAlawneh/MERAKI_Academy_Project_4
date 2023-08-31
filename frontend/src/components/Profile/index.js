@@ -152,7 +152,7 @@ const Profile = () => {
                   }
                 />
                 <h3>
-                  {profile.firstName + " " + profile.lastName} 
+                  {profile.firstName + " " + profile.lastName}
                   <span>
                     {" "}
                     <Dropdown menu={{ items }} trigger={["click"]}>
@@ -170,7 +170,7 @@ const Profile = () => {
               <div className="my-info">
                 {
                   <List
-                    style={{ width: "25vw" }}
+                    style={{ width: "25vw", minHeight: "45vh" }}
                     size="large"
                     header={<h3>My Info</h3>}
                     bordered
@@ -191,7 +191,7 @@ const Profile = () => {
               <div className="profile-post">
                 {
                   <List
-                    style={{ width: "40vw" }}
+                    style={{ width: "40vw", minHeight: "45vh" }}
                     size="large"
                     header={<h3 className="header-of-list">My Posts</h3>}
                     bordered
@@ -208,7 +208,7 @@ const Profile = () => {
               <div className="friends-container">
                 {
                   <List
-                    style={{ width: "25vw" }}
+                    style={{ width: "25vw", minHeight: "45vh" }}
                     header={<h3 className="header-of-list">My Friends</h3>}
                     size="large"
                     bordered

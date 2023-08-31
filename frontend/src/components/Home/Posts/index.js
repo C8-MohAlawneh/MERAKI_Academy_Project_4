@@ -326,6 +326,11 @@ const Posts = () => {
                         />
                         {
                           <BiSolidCheckCircle
+                            style={{
+                              color: "green",
+                              fontSize: "200%",
+                              cursor: "pointer",
+                            }}
                             onClick={() => {
                               axios
                                 .put(
@@ -353,7 +358,7 @@ const Posts = () => {
                       </>
                     ) : (
                       <div className="post-and-input">
-                        <h4>{post.post}</h4>
+                        <h3>{post.post}</h3>
                       </div>
                     )}
                   </div>

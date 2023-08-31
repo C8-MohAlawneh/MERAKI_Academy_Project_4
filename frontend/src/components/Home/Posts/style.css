@@ -92,9 +92,9 @@
   width: 100%;
   margin-top: 5px;
   height: 10vh;
-  align-self: center;
+  padding-top: 2vh;
+  vertical-align: middle;
 }
 .create-post-input {
   margin-top: 20px;
 }
-

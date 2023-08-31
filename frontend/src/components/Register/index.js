@@ -46,7 +46,7 @@ const Register = () => {
           <b>Age</b>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Age"
           id="age"
           className="register-input"
