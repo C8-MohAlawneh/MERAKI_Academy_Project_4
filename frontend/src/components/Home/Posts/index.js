@@ -93,7 +93,30 @@ const Posts = () => {
     <>
       <div className="posts-container">
         <div className="one-post-container">
-          <Card bordered={true} style={{ width: "100%" }}>
+          <Card
+            bordered={true}
+            style={{ width: "100%" }}
+            actions={[
+              <Button
+                className="create-post-btn"
+                style={{ width: "100%", border: "none", height: "100%" }}
+                onClick={() => {
+                  axios
+                    .post("http://localhost:5000/posts", createPost, {
+                      headers: { Authorization: `Bearer ${token}` },
+                    })
+                    .then((result) => {
+                      setPosts([...posts, result.data.post]);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
+              >
+                Post
+              </Button>,
+            ]}
+          >
             <Meta
               avatar={<Avatar src={profile.userPhoto} />}
               title={`${profile.firstName} ${profile.lastName}`}
@@ -105,23 +128,6 @@ const Posts = () => {
               }}
               placeholder="write something"
             />
-            <Button
-              className="create-post-btn"
-              onClick={() => {
-                axios
-                  .post("http://localhost:5000/posts", createPost, {
-                    headers: { Authorization: `Bearer ${token}` },
-                  })
-                  .then((result) => {
-                    setPosts([...posts, result.data.post]);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }}
-            >
-              Post
-            </Button>
           </Card>
         </div>
         {posts &&

@@ -47,7 +47,7 @@ const Navbar = () => {
             Social Media PlatForm
           </h2>
           <Search
-            placeholder="Search"
+            placeholder="Search Friends"
             enterButton
             style={{ width: "25%" }}
             onChange={(e) => {

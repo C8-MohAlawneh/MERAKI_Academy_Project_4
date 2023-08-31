@@ -3,4 +3,7 @@
   width: 20vw;
   border-radius: 10px;
   box-shadow: 5px 5px rgb(198, 198, 198);
+  position: sticky;
+  top: 0;
+  cursor: pointer;
 }

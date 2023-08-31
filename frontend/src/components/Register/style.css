@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #e1e5e6;
 }
 /* Full-width input fields */
 .register-input {
@@ -15,11 +14,7 @@
   padding: 2%;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
-}
-
-.register-input {
-  background-color: #ddd;
+  background-color: #d6cdcd;
   outline: none;
   border-radius: 5px;
 }
@@ -27,12 +22,12 @@
 /* Overwrite default styles of hr */
 hr {
   border: 1px solid #f1f1f1;
-  margin-bottom: 3%;
+  margin-bottom: 2.5%;
 }
 
 /* Set a style for the submit button */
 .registerbtn {
-  background-color: #56b391;
+  background-color: #1677ff;
   color: white;
   padding: 2%;
   border: none;
@@ -46,18 +41,16 @@ hr {
   opacity: 1;
 }
 
-
 a {
   color: dodgerblue;
 }
-
 
 .signin {
   background-color: #f1f1f1;
   text-align: center;
 }
 .register-page-child {
-  width: 70%;
-  height: 100vh;
+  width: 65%;
+  height: 100%;
   background-color: white;
 }

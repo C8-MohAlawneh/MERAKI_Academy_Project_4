@@ -25,6 +25,7 @@
   justify-content: space-between;
   margin-top: 10vh;
   margin-left: 1vw;
+  min-height: 80vh;
   /* flex-direction: column; */
   /* margin-left: ;
   margin-right: ; */
