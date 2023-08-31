@@ -2,13 +2,24 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 import "./style.css";
-import { Avatar, List, Skeleton, Layout, Menu, Button, theme } from "antd";
+import {
+  Avatar,
+  List,
+  Skeleton,
+  Layout,
+  Menu,
+  Button,
+  theme,
+  Dropdown,
+  Space,
+} from "antd";
 import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
   HomeOutlined,
   UsergroupAddOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import FooterJS from "../FooterJS";
 const { Sider, Content, Footer } = Layout;
@@ -24,7 +35,6 @@ const Profile = () => {
     setProfile,
     collapsed,
   } = useContext(AppContext);
-  const [uploadImg, setUploadImg] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -71,6 +81,25 @@ const Profile = () => {
       })
       .catch((err) => console.log(err));
   };
+  const items = [
+    {
+      key: "input",
+      label: (
+        <input
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+        ></input>
+      ),
+    },
+    {
+      label: (
+        <Button onClick={uploadImage} type="primary">
+          update
+        </Button>
+      ),
+      key: "1",
+    },
+  ];
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -115,9 +144,6 @@ const Profile = () => {
             <div className="profile-face">
               <div className="img-and-name">
                 <img
-                  onClick={() => {
-                    setUploadImg((prv) => !prv);
-                  }}
                   className="profile-image"
                   src={
                     profile.userPhoto
@@ -125,18 +151,19 @@ const Profile = () => {
                       : "https://1fid.com/wp-content/uploads/2022/06/no-profile-picture-4-1024x1024.jpg"
                   }
                 />
-                <h3>{profile.firstName + " " + profile.lastName}</h3>
-                {uploadImg && (
-                  <div className="upload-image">
-                    <div>
-                      <input
-                        type="file"
-                        onChange={(e) => setImage(e.target.files[0])}
-                      ></input>
-                      <button onClick={uploadImage}>update</button>
-                    </div>
-                  </div>
-                )}
+                <h3>
+                  {profile.firstName + " " + profile.lastName} 
+                  <span>
+                    {" "}
+                    <Dropdown menu={{ items }} trigger={["click"]}>
+                      <a onClick={(e) => e.preventDefault()}>
+                        <Space>
+                          <DownOutlined />
+                        </Space>
+                      </a>
+                    </Dropdown>
+                  </span>
+                </h3>
               </div>
             </div>
             <div className="body-of-profile">

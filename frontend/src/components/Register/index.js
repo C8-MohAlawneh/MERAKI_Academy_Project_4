@@ -98,7 +98,7 @@ const Register = () => {
                   navigate("/login");
                 })
                 .catch((err) => {
-                  setErrMessage(err.response.data.message);
+                  setErrMessage(err.response.data.err);
                 });
             }}
           >
@@ -107,8 +107,8 @@ const Register = () => {
           <p>
             Already have an account? <Link to="/login">login</Link>
           </p>
+          {errMessage && <h4 style={{ color: "red" }}>{errMessage}</h4>}
         </div>
-        {errMessage && <h4>{errMessage}</h4>}
       </div>
     </div>
   );
