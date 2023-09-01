@@ -4,13 +4,7 @@ import axios from "axios";
 import "./style.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
 import { Avatar, Button, Card } from "antd";
-import {
-  DownOutlined,
-  LikeOutlined,
-  CommentOutlined,
-  LikeTwoTone,
-  LikeFilled,
-} from "@ant-design/icons";
+import { DownOutlined, CommentOutlined, LikeFilled } from "@ant-design/icons";
 import { Dropdown, Space, Input } from "antd";
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -99,7 +93,12 @@ const Posts = () => {
             actions={[
               <Button
                 className="create-post-btn"
-                style={{ width: "100%", border: "none", height: "100%" }}
+                style={{
+                  width: "50%",
+                  border: "none",
+                  height: "100%",
+                  color: "blue",
+                }}
                 onClick={() => {
                   axios
                     .post("http://localhost:5000/posts", createPost, {
@@ -113,7 +112,7 @@ const Posts = () => {
                     });
                 }}
               >
-                Post
+                <h3>Post</h3>
               </Button>,
             ]}
           >
@@ -373,6 +372,7 @@ const Posts = () => {
                             <span>
                               <Avatar src={comment.commenter.userPhoto} />
                             </span>
+                            &nbsp;
                             {comment.comment}
                           </p>
                         </div>

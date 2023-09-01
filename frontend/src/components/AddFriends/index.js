@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
-import { Avatar, Button, List, Skeleton, Layout, Menu, theme } from "antd";
+import { Avatar, Button, List, Skeleton, Layout, Menu } from "antd";
 import "./style.css";
 import {
   UploadOutlined,
@@ -31,7 +31,6 @@ const AddFriends = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((result) => {
-        console.log(result.data.profile);
         setFriendsReq(result.data.profile.friendsReq);
       })
       .catch();
@@ -131,11 +130,13 @@ const AddFriends = () => {
                                 },
                               }
                             );
-                            setFriendsReq(
-                              friendsReq.filter((elem) => {
-                                return elem._id !== item._id;
-                              })
-                            );
+                            setTimeout(() => {
+                              setFriendsReq(
+                                friendsReq.filter((elem) => {
+                                  return elem._id !== item._id;
+                                })
+                              );
+                            }, 500);
                           } catch (err) {
                             console.log(err);
                           }
@@ -157,11 +158,13 @@ const AddFriends = () => {
                                 },
                               }
                             );
-                            setFriendsReq(
-                              friendsReq.filter((elem) => {
-                                return elem._id !== item._id;
-                              })
-                            );
+                            setTimeout(() => {
+                              setFriendsReq(
+                                friendsReq.filter((elem) => {
+                                  return elem._id !== item._id;
+                                })
+                              );
+                            }, 500);
                           } catch (err) {
                             console.log(err);
                           }

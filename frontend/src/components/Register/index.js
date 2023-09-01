@@ -98,6 +98,7 @@ const Register = () => {
                   navigate("/login");
                 })
                 .catch((err) => {
+                  console.log(err);
                   setErrMessage(err.response.data.err);
                 });
             }}
