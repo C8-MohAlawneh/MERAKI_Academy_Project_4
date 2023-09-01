@@ -23,7 +23,7 @@
 .body-of-profile {
   display: flex;
   justify-content: space-between;
-  margin-top: 11vh;
+  margin-top: 13vh;
   margin-left: 1vw;
   min-height: 80vh;
 }
@@ -31,4 +31,3 @@
   display: flex;
   justify-content: center;
 }
-

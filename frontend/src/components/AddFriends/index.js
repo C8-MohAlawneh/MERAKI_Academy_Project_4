@@ -13,6 +13,8 @@ import {
 import FooterJS from "../FooterJS";
 
 const { Sider, Content, Footer } = Layout;
+const count = 3;
+const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
 const AddFriends = () => {
   const { token, allProfiles, setAllProfiles, collapsed } =
@@ -49,6 +51,35 @@ const AddFriends = () => {
         console.log(err);
       });
   };
+  const onLoadMore = () => {
+    setLoading(true);
+    setAllProfiles(
+      allProfiles.concat(
+        [...new Array(count)].map(() => ({
+          loading: true,
+          name: {},
+          picture: {},
+        }))
+      )
+    );
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        const newUser = res.results.map((elem) => {
+          return {
+            firstName: elem.name.first,
+            lastName: elem.name.last,
+            userPhoto: elem.picture.medium,
+          };
+        });
+        setAllProfiles([...allProfiles, ...newUser]);
+        setLoading(false);
+        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+        // In real scene, you can using public method of react-virtualized:
+        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+        window.dispatchEvent(new Event("resize"));
+      });
+  };
   const loadMore =
     !initLoading && !loading ? (
       <div
@@ -58,7 +89,9 @@ const AddFriends = () => {
           height: 32,
           lineHeight: "32px",
         }}
-      ></div>
+      >
+        <Button onClick={onLoadMore}>loading more</Button>
+      </div>
     ) : null;
 
   return (
