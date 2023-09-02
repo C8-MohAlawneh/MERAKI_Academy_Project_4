@@ -10,7 +10,8 @@ const Register = () => {
     <div className="register-page">
       <div className="register-page-child">
         <div className="container">
-          <h1>Register</h1>
+          <h1>Social Media PlatForm</h1>
+          <h2>Register</h2>
           <p>Please fill in this form to create an account.</p>
         </div>
         <label htmlFor="firstName">
@@ -99,7 +100,8 @@ const Register = () => {
                 })
                 .catch((err) => {
                   console.log(err);
-                  setErrMessage(err.response.data.err);
+                  setErrMessage(err.response.data.err) ||
+                    setErrMessage(err.response.data.message);
                 });
             }}
           >

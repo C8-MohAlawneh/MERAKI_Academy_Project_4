@@ -11,13 +11,15 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import FooterJS from "../FooterJS";
+import { useNavigate } from "react-router-dom";
 
 const { Sider, Content, Footer } = Layout;
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
 const AddFriends = () => {
-  const { token, allProfiles, setAllProfiles, collapsed } =
+  const navigate = useNavigate();
+  const { token, allProfiles, setAllProfiles, collapsed, setProfile } =
     useContext(AppContext);
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -281,12 +283,12 @@ const AddFriends = () => {
                       active
                     >
                       <List.Item.Meta
+                        onClick={() => {
+                          setProfile(item);
+                          navigate("/profile");
+                        }}
                         avatar={<Avatar src={item.userPhoto} />}
-                        title={
-                          <a href="https://ant.design">
-                            {item.firstName + " " + item.lastName}
-                          </a>
-                        }
+                        title={<a>{item.firstName + " " + item.lastName}</a>}
                         description={item.email}
                       />
                     </Skeleton>

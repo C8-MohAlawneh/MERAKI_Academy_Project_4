@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
@@ -9,7 +10,6 @@ const AppContextProvider = ({ children }) => {
   const [allProfiles, setAllProfiles] = useState([]);
   const [profile, setProfile] = useState({});
   const [collapsed, setCollapsed] = useState(true);
-
   return (
     <AppContext.Provider
       value={{
