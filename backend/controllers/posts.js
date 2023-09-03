@@ -45,7 +45,7 @@ const getAllPosts = (req, res) => {
   const userId = req.token.userId;
   postsModel
     .find()
-    .populate("comments likes user")
+    .populate("comments user")
     .populate({
       path: "comments",
       populate: {

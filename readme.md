@@ -94,7 +94,7 @@ Now app ready to use
 
   <img width=300px height=200px alt="Post" src="./readme Images/create post.png"/><hr/>
 
-- This is your post image, you can like, comment and edit your post ,or just like or comment on other posts.  <br>
+- This is your post image, you can like, comment and edit your post ,or just like or comment on other posts.<br>
 
 
   <img width=300px height=200px alt="One Post" src="./readme Images/One post.png"/><hr>

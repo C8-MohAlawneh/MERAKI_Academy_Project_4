@@ -13,7 +13,7 @@ function App() {
   const { isLoggedIn } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("/Login");
+    !isLoggedIn && navigate("/Login");
   }, []);
   return (
     <div className="App">
