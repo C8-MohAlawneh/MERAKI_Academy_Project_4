@@ -4,7 +4,7 @@
  </a>
 </p>
 
-<h3 align="center">Social Media Platform
+<h3 align="center">Socioverse
 </h3>
 
 ---
