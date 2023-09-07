@@ -283,10 +283,10 @@ const AddFriends = () => {
                       active
                     >
                       <List.Item.Meta
-                        onClick={() => {
-                          setProfile(item);
-                          navigate("/profile");
-                        }}
+                        // onClick={() => {
+                        //   setProfile(item);
+                        //   navigate("/profile");
+                        // }}
                         avatar={<Avatar src={item.userPhoto} />}
                         title={<a>{item.firstName + " " + item.lastName}</a>}
                         description={item.email}

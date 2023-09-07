@@ -39,7 +39,7 @@ const Profile = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   useEffect(() => {
-    // getMyProfile();
+    getMyProfile();
   }, []);
   const getMyProfile = () => {
     axios

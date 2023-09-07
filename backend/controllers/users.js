@@ -83,7 +83,6 @@ const login = (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({
         success: false,
         message: `Server Error`,
@@ -159,7 +158,6 @@ const addUserPhoto = (req, res) => {
           message: `no user login`,
         });
       }
-      console.log(result);
       res.status(202).json({
         success: true,
         message: "The user photo updated",
